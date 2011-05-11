@@ -1,6 +1,6 @@
 Redirect Check - HTTP status code checker
 =========================================
-Redirect Check is service to check the HTTP status code behind an URL. It indicates if a URL redirects properly (301, 302...) and is therefore useful for SEO. It's driven by [Sinatra](http://www.sinatrarb.com/).
+Redirect Check is a service to check the HTTP status code behind an URL. It indicates if a URL redirects properly (301, 302...) and is therefore useful for SEO. It's driven by [Sinatra](http://www.sinatrarb.com/).
 
 License
 -------
