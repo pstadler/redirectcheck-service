@@ -15,7 +15,7 @@
 			
 			$('rc-form').addEvent('submit', function() {
 				if($('uri').get('value') !== '') {
-					document.location.hash = '#!' + $('uri').get('value');
+					window.location.hash = '#!' + $('uri').get('value');
 					$('result').erase('class');
 					new Request.JSON({url: '/json/' + $('uri').get('value'), onRequest: function() { $('result').set('text', '...'); }, onSuccess: function(result) {
 						if(parseInt(result.http_code, 10) >= 100) {
@@ -28,8 +28,8 @@
 				return false;
 			});
 			
-			if(document.location.hash.test(/^#![a-z0-9\.\-\/]+/i)) {
-				$('uri').set('value', document.location.hash.substr(2)).removeClass('preset');
+			if(window.location.hash.test(/^#![a-z0-9\.\-\/]+/i)) {
+				$('uri').set('value', window.location.hash.substr(2)).removeClass('preset');
 				$('rc-form').fireEvent('submit');
 			}
 		});
@@ -152,10 +152,10 @@
 <body>
 <div id="wrapper">
 	<h1>Check the HTTP status code</h1>
-	<form id="rc-form" method="GET">
+	<form id="rc-form" method="get">
 		<label id="result" for="uri">URL:</label>
 		<input type="text" name="uri" value="example.com" id="uri" tabindex="1" class="preset" />
-		<input type="submit" name="send" value="Send" class="send" />
+		<input type="submit" name="button" value="Send" class="send" />
 	</form>
 	<!--<a href="https://addons.mozilla.org/firefox/addon/pagerank-client/" title="PageRank Client for Firefox">Check out the Firefox add-on</a>-->
 </div>
