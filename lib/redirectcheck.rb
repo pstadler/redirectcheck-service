@@ -1,17 +1,23 @@
 require 'uri'
-require 'net/http'
+require 'net/https'
 
 class RedirectCheck
   def self.check(uri)
-    return { :http_code => '-1', :error => 'Protocol not supported' } if uri =~ /^(?!https?).*:\/\//
+    return { :http_code => '-1', :error => 'Protocol not supported' } if uri.match(/^(?!https?).*:\/\//)
     
-    uri = "http://#{uri}" unless uri =~ /^https?:\/\//
+    uri = "http://#{uri}" unless uri.match(/^https?:\/\//)
     uri = URI.parse(uri)
     begin
-      Net::HTTP.start(uri.host, uri.port) do |http|
+      http = Net::HTTP.new(uri.host, uri.port)
+      if uri.scheme.match(/^https:\/\//)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+      http.start do |http|       
         { :http_code => http.head(uri.request_uri).code }
       end
     rescue Exception => e
+      puts e
       { :http_code => '0', :error => 'Connection failed' }
     end
   end
