@@ -20,7 +20,7 @@ get %r{/(.*)} do
   if request.env['HTTP_USER_AGENT'].include? 'redirectcheck-client'
     uri = params[:captures].first
     result = RedirectCheck.check(uri)
-    result.http_code
+    result[:http_code]
   else
     index_html = File.read('./views/index.html')
     index_html.sub!('<!--#GA#-->', GA_CODE.sub('#GA_ACCOUNT#', ENV['GA_ACCOUNT'])) if ENV['GA_ACCOUNT']
