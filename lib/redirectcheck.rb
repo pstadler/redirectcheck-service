@@ -6,7 +6,7 @@ class RedirectCheck
     return { :http_code => '-1', :error => 'Protocol not supported' } if uri.match(/^(?!https?).*:\/\//)
     
     uri = "http://#{uri}" unless uri.match(/^https?:\/\//)
-    uri = URI.parse(uri.sub(/ /, '%20'))
+    uri = URI.parse(uri)
     begin
       http = Net::HTTP.new(uri.host, uri.port)
       if uri.scheme == 'https' or uri.port == 443

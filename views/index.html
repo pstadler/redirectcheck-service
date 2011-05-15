@@ -14,17 +14,22 @@
 			});
 			
 			$('rc-form').addEvent('submit', function() {
-				var uri = $('uri').get('value');
+				var uri = $('uri').get('value').replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 				if(uri !== '') {
 					window.location.hash = '#!' + uri;
 					$('result').erase('class');
-					new Request.JSON({url: '/json/' + encodeURIComponent(uri), onRequest: function() { $('result').set('text', '...'); }, onSuccess: function(result) {
-						if(parseInt(result.http_code, 10) >= 100) {
-							$('result').set('text', result.http_code).set('class', 'status-' + result.http_code);
-						} else {
-							$('result').set('text', 'N/A');
+					new Request.JSON({url: '/json/' + encodeURIComponent(uri), onRequest: function() { $('result').set('text', '...'); },
+						onSuccess: function(result) {
+							if(parseInt(result.http_code, 10) >= 100) {
+								$('result').set('text', result.http_code).set('class', 'status-' + result.http_code);
+							} else {
+								$('result').set('text', 'N/A');
+							}
+						},
+						onFailure: function(result) {
+							$('result').set('text', 'ERROR');
 						}
-					}}).get();
+					}).get();
 				}
 				return false;
 			});
