@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    gabba (0.1.1)
     json (1.5.1)
     newrelic_rpm (3.0.1)
     rack (1.3.0)
@@ -13,6 +14,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  gabba
   json
   newrelic_rpm
   sinatra

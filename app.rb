@@ -19,6 +19,7 @@ end
 get %r{/(.*)} do
   if request.env['HTTP_USER_AGENT'].include? 'redirectcheck-client'
     uri = params[:captures].first
+    Gabba::Gabba.new(ENV['GA_ACCOUNT'], "redirectcheck.koeniglich.ch").event("Clients", "Request", request.env['HTTP_USER_AGENT']) if ENV['GA_ACCOUNT']
     result = RedirectCheck.check(uri)
     result[:http_code]
   else
